@@ -60,6 +60,13 @@ def about(subject):
 
     # BEGIN PROBLEM 2
     "*** YOUR CODE HERE ***"
+
+    def matches(paragraph):
+        for word in split(lower(remove_punctuation(paragraph))):
+            if word in subject:
+                return True
+        return False
+    return matches
     # END PROBLEM 2
 
 
