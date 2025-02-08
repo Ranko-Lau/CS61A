@@ -153,6 +153,14 @@ def memo_diff(diff_function):
     def memoized(typed, source, limit):
         # BEGIN PROBLEM EC
         "*** YOUR CODE HERE ***"
+        id = (typed, source)
+        if id not in cache:
+            result = diff_function(typed, source, limit)
+            cache[id] = (result, limit)
+        elif limit > cache[id][1]:
+            result = diff_function(typed, source, limit)
+            cache[id] = (result, limit)
+        return cache[id][0]
         # END PROBLEM EC
 
     return memoized
@@ -162,7 +170,7 @@ def memo_diff(diff_function):
 # Phase 2 #
 ###########
 
-
+@memo
 def autocorrect(typed_word, word_list, diff_function, limit):
     """Returns the element of WORD_LIST that has the smallest difference
     from TYPED_WORD based on DIFF_FUNCTION. If multiple words are tied for the smallest difference,
@@ -222,7 +230,7 @@ def furry_fixes(typed, source, limit):
     else:return 1 + furry_fixes(typed[1:],source[1:],limit-1)
     # END PROBLEM 6
 
-
+@memo_diff
 def minimum_mewtations(typed, source, limit):
     """A diff function for autocorrect that computes the edit distance from TYPED to SOURCE.
     This function takes in a string TYPED, a string SOURCE, and a number LIMIT.
