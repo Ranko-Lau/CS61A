@@ -78,7 +78,13 @@ def count_occurrences(t, n, x):
     2
     """
     "*** YOUR CODE HERE ***"
-
+    i = 0
+    count = 0
+    while i < n:
+        if(next(t)==x):
+            count+=1
+        i+=1
+    return count
 
 def repeated(t, k):
     """Return the first value in iterator t that appears k times in a row,
@@ -101,7 +107,17 @@ def repeated(t, k):
     """
     assert k > 1
     "*** YOUR CODE HERE ***"
-
+    value = next(t)
+    count = 1
+    for item in t:
+        if item == value:
+            count += 1
+            if count == k:
+                return value
+        else:
+            value = item
+            count = 1
+    return None
 
 def sprout_leaves(t, leaves):
     """Sprout new leaves containing the labels in leaves at each leaf of
@@ -137,6 +153,10 @@ def sprout_leaves(t, leaves):
           2
     """
     "*** YOUR CODE HERE ***"
+    if is_leaf(t):
+        return tree(label(t), [tree(leaf) for leaf in leaves])
+    else:
+        return tree(label(t), [sprout_leaves(branch, leaves) for branch in branches(t)])
 
 
 def partial_reverse(s, start):
@@ -152,10 +172,17 @@ def partial_reverse(s, start):
     [1, 2, 7, 6, 5, 3, 4]
     """
     "*** YOUR CODE HERE ***"
+    left = start
+    right = len(s) - 1
+
+    while left < right:
+        s[left], s[right] = s[right], s[left]
+        left += 1
+        right -= 1
 
 
 
-# Tree Data Abstraction
+    # Tree Data Abstraction
 
 def tree(label, branches=[]):
     """Construct a tree with the given label value and a list of branches."""
