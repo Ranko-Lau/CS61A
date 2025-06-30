@@ -21,13 +21,13 @@ def calc_eval(exp):
         elif operator == 'define': # define expressions
             return eval_define(operands)
         else: # Call expressions
-            return calc_apply(OPERATORS[operator], operands) # UPDATE THIS FOR Q2, what is type(operator)?
+            return calc_apply(calc_eval(operator), operands) # UPDATE THIS FOR Q2, what is type(operator)?
     elif exp in OPERATORS:   # Looking up procedures
         return OPERATORS[exp]
     elif isinstance(exp, int) or isinstance(exp, bool):   # Numbers and booleans
         return exp
-    elif _________________: # CHANGE THIS CONDITION FOR Q4 where are variables stored?
-        return _________________ # UPDATE THIS FOR Q4, how do you access a variable?
+    elif isinstance(exp, str) and exp in bindings: # CHANGE THIS CONDITION FOR Q4 where are variables stored?
+        return calc_eval(bindings[exp]) # UPDATE THIS FOR Q4, how do you access a variable?
 
 def calc_apply(op, args):
     return op(args)
@@ -80,6 +80,15 @@ def eval_and(expressions):
     True
     """
     "*** YOUR CODE HERE ***"
+    if expressions is nil: return True
+    current = expressions
+    val = None
+    while current != nil:
+        val = calc_eval(current.first)
+        if val is scheme_f:
+            return scheme_f
+        current = current.rest
+    return val
 
 bindings = {}
 
@@ -99,6 +108,11 @@ def eval_define(expressions):
     2
     """
     "*** YOUR CODE HERE ***"
+    name = expressions.first
+    if isinstance(expressions.rest.first, Pair): val = calc_eval(expressions.rest.first)
+    else: val = expressions.rest.first
+    bindings[name] = val
+    return name
 
 OPERATORS = { "//": floor_div, "+": addition, "-": subtraction, "*": multiplication, "/": division }
 
