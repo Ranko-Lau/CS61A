@@ -202,6 +202,13 @@ def make_let_frame(bindings, env):
     names = vals = nil
     # BEGIN PROBLEM 14
     "*** YOUR CODE HERE ***"
+    current = bindings
+    while current is not nil:
+        names = Pair(current.first.first, names)
+        validate_form(current.first.rest, 1, 1)
+        vals = Pair(scheme_eval(current.first.rest.first, env), vals)
+        current = current.rest
+    validate_formals(names)
     # END PROBLEM 14
     return env.make_child_frame(names, vals)
 
